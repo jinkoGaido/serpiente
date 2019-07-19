@@ -4,16 +4,16 @@
 
 #include <ncurses.h>
 
-#include "../include/mapa.hpp"
-#include "../include/comida.hpp"
-#include "../include/juego.hpp"
+#include "mapa.hpp"
+#include "comida.hpp"
+#include "juego.hpp"
 
 using namespace std;
 
 int *randomComidaXY(int *, int *);
 
 Mapa mapa_bits;
-Comida comida(&mapa_bits);
+Comida comida(&mapa_bits, "*");
 Juego juego(&mapa_bits, &comida);
 
 int main(void)

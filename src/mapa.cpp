@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ncurses.h>
 
-#include "../include/mapa.hpp"
+#include "mapa.hpp"
 
 Mapa::Mapa(void)
 {

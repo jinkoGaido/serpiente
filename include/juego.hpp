@@ -1,3 +1,4 @@
+#include "global.hpp"
 #include "mapa.hpp"
 #include "comida.hpp"
 
@@ -13,24 +14,23 @@ const int ACELERACION = 10;
 class Juego
 {
 private:
-    Mapa *mapa_bits;
-    Comida *comida;
+	Mapa *mapa_bits;
+	Comida *comida;
+	Global global;
 
-    int control(void);
-    void retardo(int n);
+	int control();
+	void retardo(int);
 
 public:
-    int final = 1;
-    int aux;
-    int t_control = 4;
-    int velocidad = VEL_INI;
-    int largo_g = LARGO_INI_G;
-    int x_serpiente[100] = {37};
-    int y_serpiente[100] = {18};
+	int final = 1;
+	int velocidad = VEL_INI;
+	int largo_g = LARGO_INI_G;
+	int x_serpiente[100] = {37};
+	int y_serpiente[100] = {18};
 
-    Juego(Mapa *mapa_bits, Comida *comida);
-    ~Juego();
+	Juego(Mapa *, Comida *);
+	~Juego();
 
-    void iniciar(void);
+	void iniciar();
 };
 #endif
