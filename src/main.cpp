@@ -12,9 +12,13 @@ using namespace std;
 
 int *randomComidaXY(int *, int *);
 
-Mapa mapa_bits;
-Comida comida(&mapa_bits, "*");
-Serpiente serpiente("*");
+const char icon_serpiente = '*';
+const char icon_comida = '*';
+const char icon_mapa = '#';
+
+Mapa mapa_bits(icon_mapa);
+Comida comida(&mapa_bits, icon_comida);
+Serpiente serpiente(icon_serpiente);
 Juego juego(&mapa_bits, &comida, &serpiente);
 
 int main(void)
@@ -24,8 +28,9 @@ int main(void)
 	initscr();
 	curs_set(0);
 	noecho();
-
-	mapa_bits.dibujarMap("#");
+	keypad(stdscr, TRUE);
+	attron(A_BOLD);
+	mapa_bits.dibujarMap();
 	comida.randomXY();
 
 	refresh();
@@ -34,6 +39,7 @@ int main(void)
 
 	erase();
 	mvprintw(10, 32, "JUEGO TERMINADO");
+	attroff(A_BOLD);
 	getch();
 	endwin();
 	return 0;

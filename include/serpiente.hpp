@@ -13,15 +13,15 @@ const int ACELERACION = 10;
 class Serpiente
 {
 private:
-	const char *icon;
-
-public:
-	int velocidad = VEL_INI;
+	char icon;
 	int largo = LARGO_INI_SERPIENTE;
 	int x[LARGO_MAX_SERPIENTE + 1] = {37};
 	int y[LARGO_MAX_SERPIENTE + 1] = {18};
 
-	Serpiente(const char *);
+public:
+	int velocidad = VEL_INI;
+
+	Serpiente(char);
 	~Serpiente();
 
 	void mover();

@@ -3,8 +3,10 @@
 
 #include "mapa.hpp"
 
-Mapa::Mapa(void)
+Mapa::Mapa(char icon)
 {
+	this->icon = icon;
+
 	FILE *archivo_map;
 
 	archivo_map = fopen("data/mapa.txt", "r");
@@ -79,7 +81,7 @@ void Mapa::testMap(void)
 	fclose(buffer_y);
 }
 
-void Mapa::dibujarMap(const char *icon)
+void Mapa::dibujarMap()
 {
 	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
 	{
@@ -87,7 +89,7 @@ void Mapa::dibujarMap(const char *icon)
 		{
 			if (eje.x != 0 && eje.y != 0)
 			{
-				mvprintw(eje.y[cont2][cont], eje.x[cont2][cont], icon);
+				mvaddch(eje.y[cont2][cont], eje.x[cont2][cont], this->icon);
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 
 #include "comida.hpp"
 
-Comida::Comida(Mapa *mapa_bits, const char *icon)
+Comida::Comida(Mapa *mapa_bits, char icon)
 {
 	this->mapa_bits = mapa_bits;
 	this->icon = icon;
@@ -40,5 +40,5 @@ void Comida::randomXY()
 
 void Comida::mostrar()
 {
-	mvprintw(this->y, this->x, this->icon);
+	mvaddch(this->y, this->x, this->icon);
 }

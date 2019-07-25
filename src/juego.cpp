@@ -1,3 +1,5 @@
+#include <ncurses.h>
+
 #include "juego.hpp"
 
 Juego::Juego(Mapa *mapa_bits, Comida *comida, Serpiente *serpiente)
@@ -19,9 +21,9 @@ void Juego::iniciar(void)
 
 		this->global.capturarDireccion();
 
-		this->continua = this->serpiente->cambiar_direccion(this->global.direccion_actual, this->global.direccion_nueva);
-		
 		this->serpiente->limite_map();
+
+		this->continua = this->serpiente->cambiar_direccion(this->global.direccion_actual, this->global.direccion_nueva);
 
 		//mover gusano
 		this->serpiente->mover();

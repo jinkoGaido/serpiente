@@ -2,7 +2,7 @@
 
 #include "serpiente.hpp"
 
-Serpiente::Serpiente(const char *icon)
+Serpiente::Serpiente(char icon)
 {
     this->icon = icon;
 }
@@ -24,7 +24,7 @@ void Serpiente::mover()
     }
 
     //mostrar gusano
-    mvprintw(this->y[0], this->x[0], this->icon);
+    mvaddch(this->y[0], this->x[0], this->icon);
 
     refresh();
 }
@@ -88,14 +88,14 @@ void Serpiente::limite_map()
     if (this->x[0] == MAP_INI_X)
         this->x[0] = MAP_ANCHO + 1;
 
-    if (this->x[0] == MAP_ANCHO)
-        this->x[0] = MAP_INI_X + 1;
+    if (this->x[0] == MAP_ANCHO + 2)
+        this->x[0] = MAP_INI_X;
 
     if (this->y[0] == MAP_INI_Y)
         this->y[0] = MAP_ALTO + 1;
 
-    if (this->y[0] == MAP_ALTO)
-        this->y[0] = MAP_INI_Y + 1;
+    if (this->y[0] == MAP_ALTO + 2)
+        this->y[0] = MAP_INI_Y;
 }
 
 int Serpiente::cambiar_direccion(int direccion_actual, int direccion_nueva)
@@ -107,30 +107,30 @@ int Serpiente::cambiar_direccion(int direccion_actual, int direccion_nueva)
     case FINAL:
         continua = false;
         break;
-    case ARRIBA:
+    case COMANDO_ARRIBA:
         direccion_actual = direccion_nueva;
         this->y[0]--;
         break;
-    case ABAJO:
+    case COMANDO_ABAJO:
         direccion_actual = direccion_nueva;
         this->y[0]++;
         break;
-    case DERECHA:
+    case COMANDO_DERECHA:
         direccion_actual = direccion_nueva;
         this->x[0]++;
         break;
-    case IZQUIERDA:
+    case COMANDO_IZQUIERDA:
         direccion_actual = direccion_nueva;
         this->x[0]--;
         break;
     default:
-        if (direccion_actual == ARRIBA)
+        if (direccion_actual == COMANDO_ARRIBA)
             this->y[0]--;
-        if (direccion_actual == ABAJO)
+        if (direccion_actual == COMANDO_ABAJO)
             this->y[0]++;
-        if (direccion_actual == DERECHA)
+        if (direccion_actual == COMANDO_DERECHA)
             this->x[0]++;
-        if (direccion_actual == IZQUIERDA)
+        if (direccion_actual == COMANDO_IZQUIERDA)
             this->x[0]--;
     }
 

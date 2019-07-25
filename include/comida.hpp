@@ -7,13 +7,13 @@ class Comida
 {
 private:
     Mapa *mapa_bits;
-    const char *icon;
+    char icon;
 
 public:
     int x;
     int y;
     int verificar = 0;
-    Comida(Mapa *, const char *);
+    Comida(Mapa *, char);
     ~Comida();
 
     void randomXY();

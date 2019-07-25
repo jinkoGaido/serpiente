@@ -15,15 +15,16 @@ struct map_coordenadas
 class Mapa
 {
 private:
+	char icon;
 
 public:
-	Mapa();
+	Mapa(char);
 	~Mapa();
 
 	map_coordenadas eje;
 
 	void testMap();
-	void dibujarMap(const char *);
+	void dibujarMap();
 };
 
 #endif
