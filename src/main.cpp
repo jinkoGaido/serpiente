@@ -14,7 +14,8 @@ int *randomComidaXY(int *, int *);
 
 Mapa mapa_bits;
 Comida comida(&mapa_bits, "*");
-Juego juego(&mapa_bits, &comida);
+Serpiente serpiente("*");
+Juego juego(&mapa_bits, &comida, &serpiente);
 
 int main(void)
 {

@@ -16,12 +16,12 @@ Global::~Global()
 
 void Global::capturarDireccion()
 {
-	int seg = 1;
+	int continua = true;
 
 	if (kbhit())
 	{
 		char ctr;
-		//move(23, 79);
+		move(23, 79);
 		do
 		{
 			ctr = getch();
@@ -30,33 +30,33 @@ void Global::capturarDireccion()
 			case 'W':
 			case 'w':
 				this->direccion_nueva = ARRIBA;
-				seg = 0;
+				continua = false;
 				break;
 			case 'S':
 			case 's':
 				this->direccion_nueva = ABAJO;
-				seg = 0;
+				continua = false;
 				break;
 			case 'D':
 			case 'd':
 				this->direccion_nueva = DERECHA;
-				seg = 0;
+				continua = false;
 				break;
 			case 'A':
 			case 'a':
 				this->direccion_nueva = IZQUIERDA;
-				seg = 0;
+				continua = false;
 				break;
 			case 'p':
 			case 'P':
 				this->direccion_nueva = FINAL;
-				seg = 0;
+				continua = false;
 				break;
 
 			default:
 				break;
 			}
-		} while (seg);
+		} while (continua);
 	}
 	//validacion de datos: no se validara un cursor inverso
 	//al cursor pulsado anteriormente

@@ -1,12 +1,39 @@
+#include "global.hpp"
+#include "mapa.hpp"
+
 #ifndef _SERPIENTE_LIB
 #define _SERPIENTE_LIB
+
+const int LARGO_INI_SERPIENTE = 2;
+const int LARGO_MAX_SERPIENTE = 99;
+const int VEL_INI = 200;
+const int VEL_MAX = 100;
+const int ACELERACION = 10;
 
 class Serpiente
 {
 private:
-	/* data */
+	const char *icon;
+
 public:
-	Serpiente(/* args */);
+	int velocidad = VEL_INI;
+	int largo = LARGO_INI_SERPIENTE;
+	int x[LARGO_MAX_SERPIENTE + 1] = {37};
+	int y[LARGO_MAX_SERPIENTE + 1] = {18};
+
+	Serpiente(const char *);
 	~Serpiente();
+
+	void mover();
+
+	int si_come(int, int);
+
+	int si_choca(map_coordenadas);
+
+	int si_choca_con_el();
+
+	void limite_map();
+
+	int cambiar_direccion(int, int);
 };
 #endif
