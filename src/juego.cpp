@@ -7,6 +7,7 @@ Juego::Juego(Mapa *mapa_bits, Comida *comida, Serpiente *serpiente)
 	this->mapa_bits = mapa_bits;
 	this->comida = comida;
 	this->serpiente = serpiente;
+	this->continua = true;
 }
 
 Juego::~Juego()
@@ -19,11 +20,11 @@ void Juego::iniciar(void)
 	{
 		this->comida->mostrar();
 
-		this->global.capturarDireccion();
+		this->continua = this->global.capturarComando();
 
 		this->serpiente->limite_map();
 
-		this->continua = this->serpiente->cambiar_direccion(this->global.direccion_actual, this->global.direccion_nueva);
+		this->serpiente->cambiar_direccion(this->global.comando_actual, this->global.comando_nuevo);
 
 		//mover gusano
 		this->serpiente->mover();
@@ -39,12 +40,17 @@ void Juego::iniciar(void)
 
 		if (this->serpiente->si_choca_con_el())
 		{
-			this->global.direccion_nueva = FINAL;
+			this->final();
 		}
 
 		if (this->serpiente->si_choca(this->mapa_bits->eje))
 		{
-			this->global.direccion_nueva = FINAL;
+			this->final();
 		}
 	}
+}
+
+void Juego::final()
+{
+	this->continua = false;
 }

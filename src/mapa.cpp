@@ -8,36 +8,37 @@ Mapa::Mapa(char icon)
 	this->icon = icon;
 
 	FILE *archivo_map;
+	int ch;
+	int cont_x = 0;
+	int cont_y = 0;
 
-	archivo_map = fopen("data/mapa.txt", "r");
+	archivo_map = fopen("data/mapa1_lv1.mp", "r");
 
-	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
+	while ((ch = fgetc(archivo_map)) != EOF)
 	{
-		for (int cont = 0; cont < MAP_ANCHO; cont++)
+		if (cont_x < MAP_ANCHO && cont_y < MAP_ALTO)
 		{
-			fscanf(archivo_map, "%i,", &eje.x[cont2][cont]);
+			this->buffer_map[cont_y][cont_x] = ch;
+			cont_x++;
 		}
-		fscanf(archivo_map, "\n");
-	}
-	rewind(archivo_map);
-
-	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
-	{
-		for (int cont = 0; cont < MAP_ANCHO; cont++)
+		else
 		{
-			fscanf(archivo_map, "%i,", &eje.y[cont2][cont]);
+			cont_x = 0;
+			cont_y++;
 		}
-		fscanf(archivo_map, "\n");
 	}
 
-	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
+	for (int cont_y = 0; cont_y < MAP_ALTO; cont_y++)
 	{
-		for (int cont = 0; cont < MAP_ANCHO; cont++)
+		for (int cont_x = 0; cont_x < MAP_ANCHO; cont_x++)
 		{
-			if (eje.x[cont2][cont] == 1 && eje.y[cont2][cont] == 1)
+			if (this->buffer_map[cont_y][cont_x] != 48)
 			{
-				eje.x[cont2][cont] = cont + 1;
-				eje.y[cont2][cont] = cont2 + 1;
+				eje.x[cont_y][cont_x] = cont_x + 1;
+				eje.y[cont_y][cont_x] = cont_y + 1;
+			}else{
+				eje.x[cont_y][cont_x] = 0;
+				eje.y[cont_y][cont_x] = 0;
 			}
 		}
 	}
@@ -49,36 +50,22 @@ Mapa::~Mapa()
 {
 }
 
-void Mapa::testMap(void)
+void Mapa::testMap()
 {
-	FILE *buffer_x;
+	FILE *archivo_buffer;
 
-	buffer_x = fopen("data/buffer_x.txt", "w");
-
-	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
-	{
-		for (int cont = 0; cont < MAP_ANCHO; cont++)
-		{
-			fprintf(buffer_x, "%i,", eje.x[cont2][cont]);
-		}
-		fprintf(buffer_x, "\n");
-	}
-
-	FILE *buffer_y;
-
-	buffer_y = fopen("data/buffer_y.txt", "w");
+	archivo_buffer = fopen("data/buffer_test", "w");
 
 	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
 	{
 		for (int cont = 0; cont < MAP_ANCHO; cont++)
 		{
-			fprintf(buffer_y, "%i,", eje.y[cont2][cont]);
+			fprintf(archivo_buffer, "%i,", this->buffer_map[cont2][cont]);
 		}
-		fprintf(buffer_y, "\n");
+		fprintf(archivo_buffer, "\n");
 	}
 
-	fclose(buffer_x);
-	fclose(buffer_y);
+	fclose(archivo_buffer);
 }
 
 void Mapa::dibujarMap()

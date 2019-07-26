@@ -8,75 +8,60 @@
 
 Global::Global()
 {
-	this->direccion_nueva = COMANDO_DERECHA;
+	this->comando_nuevo = COMANDO_DERECHA;
 }
 
 Global::~Global()
 {
 }
 
-void Global::capturarDireccion()
+bool Global::capturarComando()
 {
-	int continua = true;
+	bool continuar_juego = true;
 
 	if (kbhit())
 	{
 		int ctr;
 		move(23, 79);
-		do
-		{
-			ctr = getch();
-			switch (ctr)
-			{
-			case TECLA_ARRIBA:
-			case TECLA_ARRIBA_W:
-			case TECLA_ARRIBA_MW:
-				this->direccion_nueva = COMANDO_ARRIBA;
-				continua = false;
-				break;
-			case TECLA_ABAJO:
-			case TECLA_ABAJO_S:
-			case TECLA_ABAJO_MS:
-				this->direccion_nueva = COMANDO_ABAJO;
-				continua = false;
-				break;
-			case TECLA_DERECHA:
-			case TECLA_DERECHA_D:
-			case TECLA_DERECHA_MD:
-				this->direccion_nueva = COMANDO_DERECHA;
-				continua = false;
-				break;
-			case TECLA_IZQUIERDA:
-			case TECLA_IZQUIERDA_A:
-			case TECLA_IZQUIERDA_MA:
-				this->direccion_nueva = COMANDO_IZQUIERDA;
-				continua = false;
-				break;
-			case TECLA_FINAL:
-			case TECLA_FINAL_M:
-				this->direccion_nueva = FINAL;
-				continua = false;
-				break;
 
-			default:
-				this->direccion_nueva = this->direccion_actual;
-				continua = false;
-				break;
-			}
-		} while (continua);
+		ctr = getch();
+		switch (ctr)
+		{
+		case TECLA_ARRIBA:
+			this->comando_nuevo = COMANDO_ARRIBA;
+			break;
+		case TECLA_ABAJO:
+			this->comando_nuevo = COMANDO_ABAJO;
+			break;
+		case TECLA_DERECHA:
+			this->comando_nuevo = COMANDO_DERECHA;
+			break;
+		case TECLA_IZQUIERDA:
+			this->comando_nuevo = COMANDO_IZQUIERDA;
+			break;
+		case TECLA_FINAL:
+			continuar_juego = false;
+			break;
+
+		default:
+			//this->comando_nuevo = this->comando_actual;
+			break;
+		}
+		//validacion de datos: no se validara un cursor inverso
+		//al cursor pulsado anteriormente
+		if ((this->comando_nuevo == COMANDO_IZQUIERDA && this->comando_actual == COMANDO_DERECHA) ||
+			(this->comando_nuevo == COMANDO_DERECHA && this->comando_actual == COMANDO_IZQUIERDA))
+		{
+			this->comando_nuevo = this->comando_actual;
+		}
+		if ((this->comando_nuevo == COMANDO_ARRIBA && this->comando_actual == COMANDO_ABAJO) ||
+			(this->comando_nuevo == COMANDO_ABAJO && this->comando_actual == COMANDO_ARRIBA))
+		{
+			this->comando_nuevo = this->comando_actual;
+		}
 	}
-	//validacion de datos: no se validara un cursor inverso
-	//al cursor pulsado anteriormente
-	if ((this->direccion_nueva == COMANDO_IZQUIERDA && this->direccion_actual == COMANDO_DERECHA) ||
-		(this->direccion_nueva == COMANDO_DERECHA && this->direccion_actual == COMANDO_IZQUIERDA))
-	{
-		this->direccion_nueva = this->direccion_actual;
-	}
-	if ((this->direccion_nueva == COMANDO_ARRIBA && this->direccion_actual == COMANDO_ABAJO) ||
-		(this->direccion_nueva == COMANDO_ABAJO && this->direccion_actual == COMANDO_ARRIBA))
-	{
-		this->direccion_nueva = this->direccion_actual;
-	}
+
+	return continuar_juego;
 }
 
 void Global::retardo(int n)

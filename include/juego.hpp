@@ -14,7 +14,7 @@ private:
 	Serpiente *serpiente;
 	Global global;
 
-	int continua = 1;
+	bool continua;
 
 	int control();
 	void retardo(int);
@@ -24,5 +24,6 @@ public:
 	~Juego();
 
 	void iniciar();
+	void final();
 };
 #endif

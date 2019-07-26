@@ -16,6 +16,7 @@ class Mapa
 {
 private:
 	char icon;
+	int buffer_map[MAP_ALTO][MAP_ANCHO];
 
 public:
 	Mapa(char);

@@ -10,8 +10,6 @@
 
 using namespace std;
 
-int *randomComidaXY(int *, int *);
-
 const char icon_serpiente = '*';
 const char icon_comida = '*';
 const char icon_mapa = '#';
@@ -29,10 +27,10 @@ int main(void)
 	curs_set(0);
 	noecho();
 	keypad(stdscr, TRUE);
-	attron(A_BOLD);
 	mapa_bits.dibujarMap();
+	mapa_bits.testMap();
 	comida.randomXY();
-
+	attron(A_BOLD);
 	refresh();
 
 	juego.iniciar();

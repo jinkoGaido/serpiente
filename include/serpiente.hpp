@@ -34,6 +34,6 @@ public:
 
 	void limite_map();
 
-	int cambiar_direccion(int, int);
+	void cambiar_direccion(int, int);
 };
 #endif

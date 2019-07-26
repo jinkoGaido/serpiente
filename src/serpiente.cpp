@@ -98,41 +98,34 @@ void Serpiente::limite_map()
         this->y[0] = MAP_INI_Y;
 }
 
-int Serpiente::cambiar_direccion(int direccion_actual, int direccion_nueva)
+void Serpiente::cambiar_direccion(int comando_actual, int comando_nuevo)
 {
-    int continua = true;
-
-    switch (direccion_nueva)
+    switch (comando_nuevo)
     {
-    case FINAL:
-        continua = false;
-        break;
     case COMANDO_ARRIBA:
-        direccion_actual = direccion_nueva;
+        comando_actual = comando_nuevo;
         this->y[0]--;
         break;
     case COMANDO_ABAJO:
-        direccion_actual = direccion_nueva;
+        comando_actual = comando_nuevo;
         this->y[0]++;
         break;
     case COMANDO_DERECHA:
-        direccion_actual = direccion_nueva;
+        comando_actual = comando_nuevo;
         this->x[0]++;
         break;
     case COMANDO_IZQUIERDA:
-        direccion_actual = direccion_nueva;
+        comando_actual = comando_nuevo;
         this->x[0]--;
         break;
     default:
-        if (direccion_actual == COMANDO_ARRIBA)
+        if (comando_actual == COMANDO_ARRIBA)
             this->y[0]--;
-        if (direccion_actual == COMANDO_ABAJO)
+        if (comando_actual == COMANDO_ABAJO)
             this->y[0]++;
-        if (direccion_actual == COMANDO_DERECHA)
+        if (comando_actual == COMANDO_DERECHA)
             this->x[0]++;
-        if (direccion_actual == COMANDO_IZQUIERDA)
+        if (comando_actual == COMANDO_IZQUIERDA)
             this->x[0]--;
     }
-
-    return continua;
 }
