@@ -1,5 +1,3 @@
-#include <ncurses.h>
-
 #include "juego.hpp"
 
 Juego::Juego(Mapa *mapa_bits, Comida *comida, Serpiente *serpiente)
@@ -53,4 +51,14 @@ void Juego::iniciar(void)
 void Juego::final()
 {
 	this->continua = false;
+}
+
+void Juego::terminarJuego()
+{
+	erase();
+	mvprintw(10, 32, "JUEGO TERMINADO");
+	attroff(COLOR_PAIR(1));
+	attroff(A_BOLD);
+	getch();
+	endwin();
 }

@@ -27,16 +27,16 @@ bool Global::capturarComando()
 		ctr = getch();
 		switch (ctr)
 		{
-		case TECLA_ARRIBA:
+		case KEY_UP:
 			this->comando_nuevo = COMANDO_ARRIBA;
 			break;
-		case TECLA_ABAJO:
+		case KEY_DOWN:
 			this->comando_nuevo = COMANDO_ABAJO;
 			break;
-		case TECLA_DERECHA:
+		case KEY_RIGHT:
 			this->comando_nuevo = COMANDO_DERECHA;
 			break;
-		case TECLA_IZQUIERDA:
+		case KEY_LEFT:
 			this->comando_nuevo = COMANDO_IZQUIERDA;
 			break;
 		case TECLA_FINAL:

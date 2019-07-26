@@ -6,8 +6,8 @@
 
 const int LARGO_INI_SERPIENTE = 2;
 const int LARGO_MAX_SERPIENTE = 99;
-const int VEL_INI = 200;
-const int VEL_MAX = 100;
+const int VEL_INI = 180;
+const int VEL_MAX = 80;
 const int ACELERACION = 10;
 
 class Serpiente
@@ -34,6 +34,6 @@ public:
 
 	void limite_map();
 
-	void cambiar_direccion(int, int);
+	void cambiar_direccion(int &, int &);
 };
 #endif

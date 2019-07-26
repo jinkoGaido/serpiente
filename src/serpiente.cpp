@@ -68,13 +68,10 @@ int Serpiente::si_choca_con_el()
     //revisar el funcionamiento de este bloque
     for (int cont = false; cont < this->largo; cont++)
     {
-        if (this->largo == this->largo + 1)
+        if ((this->x[0] == this->x[cont + 1] && this->y[0] == this->y[cont + 1]) && cont > 1)
         {
-            if ((this->x[0] == this->x[cont + 1] && this->y[0] == this->y[cont + 1]) && cont > 0)
-            {
-                choco = true;
-                break;
-            }
+            choco = true;
+            break;
         }
     }
 
@@ -98,7 +95,7 @@ void Serpiente::limite_map()
         this->y[0] = MAP_INI_Y;
 }
 
-void Serpiente::cambiar_direccion(int comando_actual, int comando_nuevo)
+void Serpiente::cambiar_direccion(int &comando_actual, int &comando_nuevo)
 {
     switch (comando_nuevo)
     {

@@ -19,14 +19,27 @@ Comida comida(&mapa_bits, icon_comida);
 Serpiente serpiente(icon_serpiente);
 Juego juego(&mapa_bits, &comida, &serpiente);
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	mapa_bits.testMap();
 
 	initscr();
 	curs_set(0);
 	noecho();
+	cbreak();
 	keypad(stdscr, TRUE);
+
+	if (has_colors() == FALSE)
+	{
+		endwin();
+		printf("Tu terminar no soporta color\n");
+		exit(1);
+	}
+	start_color();
+
+	init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	attron(COLOR_PAIR(1));
+
 	mapa_bits.dibujarMap();
 	mapa_bits.testMap();
 	comida.randomXY();
@@ -35,10 +48,6 @@ int main(void)
 
 	juego.iniciar();
 
-	erase();
-	mvprintw(10, 32, "JUEGO TERMINADO");
-	attroff(A_BOLD);
-	getch();
-	endwin();
+	juego.terminarJuego();
 	return 0;
 }

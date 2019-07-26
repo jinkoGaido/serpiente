@@ -1,3 +1,5 @@
+#include <ncurses.h>
+
 #include "global.hpp"
 #include "mapa.hpp"
 #include "comida.hpp"
@@ -25,5 +27,6 @@ public:
 
 	void iniciar();
 	void final();
+	void terminarJuego();
 };
 #endif
