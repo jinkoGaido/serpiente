@@ -22,9 +22,9 @@ bool Global::capturarComando()
 	if (kbhit())
 	{
 		int ctr;
-		move(23, 79);
 
 		ctr = getch();
+
 		switch (ctr)
 		{
 		case KEY_UP:
@@ -38,6 +38,9 @@ bool Global::capturarComando()
 			break;
 		case KEY_LEFT:
 			this->comando_nuevo = COMANDO_IZQUIERDA;
+			break;
+		case TECLA_PAUSA:
+			this->pausa();
 			break;
 		case TECLA_FINAL:
 			continuar_juego = false;
@@ -67,4 +70,17 @@ bool Global::capturarComando()
 void Global::retardo(int n)
 {
 	usleep(n * 1000);
+}
+
+void Global::pausa()
+{
+	int ctrPausa;
+	do
+	{
+		mvprintw(10, 36, "PAUSADO");
+		ctrPausa = getch();
+
+	} while (ctrPausa != TECLA_PAUSA);
+
+	mvprintw(10, 36, "       ");
 }

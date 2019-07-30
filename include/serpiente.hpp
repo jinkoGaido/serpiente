@@ -6,7 +6,7 @@
 
 const int LARGO_INI_SERPIENTE = 2;
 const int LARGO_MAX_SERPIENTE = 99;
-const int VEL_INI = 180;
+const int VEL_INI = 100;
 const int VEL_MAX = 80;
 const int ACELERACION = 10;
 

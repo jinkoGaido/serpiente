@@ -12,7 +12,7 @@ private:
 public:
     int x;
     int y;
-    int verificar = 0;
+    int verificar;
     Comida(Mapa *, char);
     ~Comida();
 

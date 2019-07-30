@@ -21,8 +21,6 @@ Juego juego(&mapa_bits, &comida, &serpiente);
 
 int main(int argc, char *argv[])
 {
-	mapa_bits.testMap();
-
 	initscr();
 	curs_set(0);
 	noecho();
@@ -41,7 +39,6 @@ int main(int argc, char *argv[])
 	attron(COLOR_PAIR(1));
 
 	mapa_bits.dibujarMap();
-	mapa_bits.testMap();
 	comida.randomXY();
 	attron(A_BOLD);
 	refresh();

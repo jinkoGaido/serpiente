@@ -82,17 +82,17 @@ void Serpiente::limite_map()
 {
     //limites para que el gusano
     //traspase la pantalla
-    if (this->x[0] == MAP_INI_X)
-        this->x[0] = MAP_ANCHO + 1;
+    if (this->x[0] == ENTRADA_PORTAL_DERECHA)
+        this->x[0] = SALIDA_PORTAL_IZQUIERDA;
 
-    if (this->x[0] == MAP_ANCHO + 2)
-        this->x[0] = MAP_INI_X;
+    if (this->x[0] == ENTRADA_PORTAL_IZQUIERDA)
+        this->x[0] = SALIDA_PORTAL_DERECHA;
 
-    if (this->y[0] == MAP_INI_Y)
-        this->y[0] = MAP_ALTO + 1;
+    if (this->y[0] == ENTRADA_PORTAL_SUPERIOR)
+        this->y[0] = SALIDA_PORTAL_INFERIOR;
 
-    if (this->y[0] == MAP_ALTO + 2)
-        this->y[0] = MAP_INI_Y;
+    if (this->y[0] == ENTRADA_PORTAL_INFERIOR)
+        this->y[0] = SALIDA_PORTAL_SUPERIOR;
 }
 
 void Serpiente::cambiar_direccion(int &comando_actual, int &comando_nuevo)

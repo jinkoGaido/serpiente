@@ -34,9 +34,11 @@ Mapa::Mapa(char icon)
 		{
 			if (this->buffer_map[cont_y][cont_x] != 48)
 			{
-				eje.x[cont_y][cont_x] = cont_x + 1;
-				eje.y[cont_y][cont_x] = cont_y + 1;
-			}else{
+				eje.x[cont_y][cont_x] = cont_x + MAP_INI_X;
+				eje.y[cont_y][cont_x] = cont_y + MAP_INI_Y;
+			}
+			else
+			{
 				eje.x[cont_y][cont_x] = 0;
 				eje.y[cont_y][cont_x] = 0;
 			}
@@ -48,24 +50,6 @@ Mapa::Mapa(char icon)
 
 Mapa::~Mapa()
 {
-}
-
-void Mapa::testMap()
-{
-	FILE *archivo_buffer;
-
-	archivo_buffer = fopen("data/buffer_test", "w");
-
-	for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
-	{
-		for (int cont = 0; cont < MAP_ANCHO; cont++)
-		{
-			fprintf(archivo_buffer, "%i,", this->buffer_map[cont2][cont]);
-		}
-		fprintf(archivo_buffer, "\n");
-	}
-
-	fclose(archivo_buffer);
 }
 
 void Mapa::dibujarMap()

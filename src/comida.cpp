@@ -19,6 +19,8 @@ void Comida::randomXY()
 {
 	do
 	{
+		this->verificar = 0;
+
 		this->x = ((random() + time(NULL)) % (MAP_ANCHO - 2)) + 1;
 		this->y = ((random() + time(NULL)) % (MAP_ALTO - 2)) + 2;
 
@@ -28,7 +30,7 @@ void Comida::randomXY()
 			{
 				if (this->x == this->mapa_bits->eje.x[cont2][cont] && this->y == this->mapa_bits->eje.y[cont2][cont])
 				{
-					verificar = 1;
+					this->verificar = 1;
 					cont2 = MAP_ALTO;
 					cont = MAP_ANCHO;
 				}
