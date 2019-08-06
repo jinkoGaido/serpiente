@@ -5,6 +5,9 @@
 #include "kbhit.c"
 
 #include "global.hpp"
+#include "mapa.hpp"
+
+char Global::MENSAJE_BLANCO[40] = "                                      ";
 
 Global::Global()
 {
@@ -83,4 +86,31 @@ void Global::pausa()
 	} while (ctrPausa != TECLA_PAUSA);
 
 	mvprintw(10, 36, "       ");
+}
+
+void Global::mensaje(const char *msg, bool opt)
+{
+	attron(A_BOLD);
+	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
+	mvprintw(MAP_ALTO + 1, 35, msg);
+	refresh();
+
+	if (opt)
+		getch();
+
+	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
+	refresh();
+	attroff(A_BOLD);
+}
+
+void Global::mensaje(const char *msg, int seg)
+{
+	attron(A_BOLD);
+	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
+	mvprintw(MAP_ALTO + 1, 35, msg);
+	refresh();
+	sleep(seg);
+	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
+	refresh();
+	attroff(A_BOLD);
 }

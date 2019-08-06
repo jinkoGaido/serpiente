@@ -1,11 +1,15 @@
 #include "juego.hpp"
 
-Juego::Juego(Mapa *mapa_bits, Comida *comida, Serpiente *serpiente)
+Juego::Juego(Nivel *nivel, Comida *comida, Serpiente *serpiente)
 {
-	this->mapa_bits = mapa_bits;
+	this->nivel = nivel;
+	this->mapa = nivel->obtenerMapaActual();
 	this->comida = comida;
 	this->serpiente = serpiente;
 	this->continua = true;
+
+	this->puntos = 0;
+	this->vidas = 3;
 }
 
 Juego::~Juego()
@@ -14,13 +18,15 @@ Juego::~Juego()
 
 void Juego::iniciar(void)
 {
+	bool si_nivel_avanzado;
+
 	while (this->continua)
 	{
 		this->comida->mostrar();
 
 		this->continua = this->global.capturarComando();
 
-		this->serpiente->limite_map();
+		this->serpiente->limite_map(this->global.comando_nuevo);
 
 		this->serpiente->cambiar_direccion(this->global.comando_actual, this->global.comando_nuevo);
 
@@ -28,23 +34,55 @@ void Juego::iniciar(void)
 		this->serpiente->mover();
 
 		//velocidad de desplazamiento del gusano
-		this->global.retardo(this->serpiente->velocidad);
+		this->global.retardo(UNIDAD_CUADROS / this->serpiente->velocidad);
 
 		//verificar si el gusano esta en la misma posicion x y del alimento
-		if (this->serpiente->si_come(this->comida->x, this->comida->y))
+		if (this->serpiente->si_come(this->comida->x, this->comida->y, this->puntos))
 		{
 			this->comida->randomXY();
+			this->puntos++;
 		}
 
 		if (this->serpiente->si_choca_con_el())
 		{
-			this->final();
+			global.mensaje("CHOCASTE CON TU CUERPO.", 2);
+			global.mensaje("PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			this->vidas--;
+			this->serpiente->mover(37, 18, this->global.comando_nuevo);
+			this->mapa->dibujarMapa();
 		}
 
-		if (this->serpiente->si_choca(this->mapa_bits->eje))
+		if (this->serpiente->si_choca(this->mapa->eje))
+		{
+			global.mensaje("CHOCASTE CON EL MURO.", 2);
+			global.mensaje("PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			this->vidas--;
+			this->serpiente->mover(37, 18, this->global.comando_nuevo);
+			this->mapa->dibujarMapa();
+		}
+
+		if (this->vidas == 0)
 		{
 			this->final();
 		}
+
+		if ((this->puntos % PUNTOS_PROXIMO_NIVEL) == 0 && this->puntos != 0)
+		{
+			global.mensaje("NIVEL COMPLETADO.", 4);
+			global.mensaje("PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			this->serpiente->mover(37, 18, this->global.comando_nuevo);
+			this->puntos = 0;
+			si_nivel_avanzado = this->nivel->avanzarNivel();
+
+			if (!si_nivel_avanzado)
+			{
+				this->final();
+			}
+		}
+
+		this->actualizarTablero();
+
+		refresh();
 	}
 }
 
@@ -55,10 +93,19 @@ void Juego::final()
 
 void Juego::terminarJuego()
 {
+	global.mensaje("JUEGO TERMINADO.", 4);
 	erase();
-	mvprintw(10, 32, "JUEGO TERMINADO");
 	attroff(COLOR_PAIR(1));
-	attroff(A_BOLD);
-	getch();
 	endwin();
+}
+
+void Juego::actualizarTablero()
+{
+	attron(A_BOLD);
+	mvprintw(MAP_INI_Y - 1, 5, "Mapa: %s", this->mapa->obtenerNombre().c_str());
+	mvprintw(MAP_INI_Y - 1, 35, "Puntos: %i", this->puntos);
+	mvprintw(MAP_INI_Y - 1, 65, "Vidas: %i", this->vidas);
+
+	mvprintw(MAP_ALTO + 1, 5, "Velocidad: %i cuadro/s", this->serpiente->velocidad);
+	attroff(A_BOLD);
 }

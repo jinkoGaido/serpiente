@@ -11,10 +11,13 @@ const int TECLA_FINAL = 113;
 
 class Global
 {
+
 private:
     void pausa();
 
 public:
+    static char MENSAJE_BLANCO[40];
+
     Global();
     ~Global();
 
@@ -23,6 +26,8 @@ public:
 
     bool capturarComando();
     void retardo(int);
+    void mensaje(const char *, bool);
+    void mensaje(const char *, int);
 };
 
 #endif

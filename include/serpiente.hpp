@@ -1,3 +1,5 @@
+#include <unistd.h>
+
 #include "global.hpp"
 #include "mapa.hpp"
 
@@ -6,9 +8,19 @@
 
 const int LARGO_INI_SERPIENTE = 2;
 const int LARGO_MAX_SERPIENTE = 99;
-const int VEL_INI = 100;
-const int VEL_MAX = 80;
-const int ACELERACION = 10;
+
+//cuadros por segundo
+const int VEL_INI = 5;
+const int VEL_MAX = 20;
+
+//distancia base de cuadros para operar con milsegundos
+const int UNIDAD_CUADROS = 1000;
+
+//aceleracion de un cuadro por segundo al cuadrado
+const int ACELERACION = 1;
+
+//condicion del largo de la serpiente para la proxima aceleración
+const int SI_AUMENTA = 2;
 
 class Serpiente
 {
@@ -25,15 +37,11 @@ public:
 	~Serpiente();
 
 	void mover();
-
-	int si_come(int, int);
-
+	void mover(int, int, int &);
+	int si_come(int, int, int);
 	int si_choca(map_coordenadas);
-
 	int si_choca_con_el();
-
-	void limite_map();
-
+	void limite_map(int &);
 	void cambiar_direccion(int &, int &);
 };
 #endif

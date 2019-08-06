@@ -42,5 +42,7 @@ void Comida::randomXY()
 
 void Comida::mostrar()
 {
+	attron(A_BOLD);
 	mvaddch(this->y, this->x, this->icon);
+	attroff(A_BOLD);
 }

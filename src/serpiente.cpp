@@ -23,21 +23,36 @@ void Serpiente::mover()
         this->y[cont] = this->y[cont - 1];
     }
 
-    //mostrar gusano
     mvaddch(this->y[0], this->x[0], this->icon);
-
-    refresh();
 }
 
-int Serpiente::si_come(int x_comida, int y_comida)
+void Serpiente::mover(int x_serpiente, int y_serpiente, int &comando_nuevo)
+{
+    for (int i = 0; i < this->largo; i++)
+    {
+        mvprintw(this->y[i], this->x[i], " "); //borrar el gusano
+    }
+
+    for (int i = 0; i < this->largo; i++)
+    {
+        this->y[i] = y_serpiente;
+        this->x[i] = x_serpiente--;
+    }
+
+    comando_nuevo = COMANDO_DERECHA;
+}
+
+int Serpiente::si_come(int x_comida, int y_comida, int puntos)
 {
     int comio = false;
 
     if ((this->x[0] == x_comida) && (this->y[0] == y_comida))
     {
         this->largo++;
-        if (this->velocidad > VEL_MAX)
-            this->velocidad -= ACELERACION;
+        if (this->velocidad < VEL_MAX && puntos != 0 && (puntos + 1) % SI_AUMENTA == 0)
+        {
+            this->velocidad += ACELERACION;
+        }
 
         comio = true;
     }
@@ -78,20 +93,20 @@ int Serpiente::si_choca_con_el()
     return choco;
 }
 
-void Serpiente::limite_map()
+void Serpiente::limite_map(int &comando_nuevo)
 {
     //limites para que el gusano
     //traspase la pantalla
-    if (this->x[0] == ENTRADA_PORTAL_DERECHA)
+    if (this->x[0] == ENTRADA_PORTAL_DERECHA && comando_nuevo == COMANDO_DERECHA)
         this->x[0] = SALIDA_PORTAL_IZQUIERDA;
 
-    if (this->x[0] == ENTRADA_PORTAL_IZQUIERDA)
+    if (this->x[0] == ENTRADA_PORTAL_IZQUIERDA && comando_nuevo == COMANDO_IZQUIERDA)
         this->x[0] = SALIDA_PORTAL_DERECHA;
 
-    if (this->y[0] == ENTRADA_PORTAL_SUPERIOR)
+    if (this->y[0] == ENTRADA_PORTAL_SUPERIOR && comando_nuevo == COMANDO_ARRIBA)
         this->y[0] = SALIDA_PORTAL_INFERIOR;
 
-    if (this->y[0] == ENTRADA_PORTAL_INFERIOR)
+    if (this->y[0] == ENTRADA_PORTAL_INFERIOR && comando_nuevo == COMANDO_ABAJO)
         this->y[0] = SALIDA_PORTAL_SUPERIOR;
 }
 

@@ -7,20 +7,24 @@
 #include "mapa.hpp"
 #include "comida.hpp"
 #include "juego.hpp"
+#include "nivel.hpp"
 
 using namespace std;
 
 const char icon_serpiente = '*';
 const char icon_comida = '*';
-const char icon_mapa = '#';
-
-Mapa mapa_bits(icon_mapa);
-Comida comida(&mapa_bits, icon_comida);
-Serpiente serpiente(icon_serpiente);
-Juego juego(&mapa_bits, &comida, &serpiente);
 
 int main(int argc, char *argv[])
 {
+	Nivel nivel;
+	Mapa *mapa_bits = nivel.obtenerMapaActual();
+
+	Comida comida(mapa_bits, icon_comida);
+	Serpiente serpiente(icon_serpiente);
+	Juego juego(&nivel, &comida, &serpiente);
+
+	nivel.enlazar(&serpiente, &comida);
+
 	initscr();
 	curs_set(0);
 	noecho();
@@ -38,10 +42,10 @@ int main(int argc, char *argv[])
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 	attron(COLOR_PAIR(1));
 
-	mapa_bits.dibujarMap();
+	//attron(A_BOLD);
+
+	mapa_bits->dibujarMapa();
 	comida.randomXY();
-	attron(A_BOLD);
-	refresh();
 
 	juego.iniciar();
 
