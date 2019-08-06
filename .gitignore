@@ -1,3 +1,4 @@
 serpiente
 *.exe
 object/*.o
+.vscode/
