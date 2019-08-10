@@ -1,14 +1,10 @@
-#include <time.h>
-#include <stdlib.h>
-
-#include <ncurses.h>
-
 #include "comida.hpp"
 
 Comida::Comida(Mapa *mapa_bits, char icon)
 {
+	this->conf = this->global.configuracion("comida");
+    this->icon = (this->conf["icon"].isString()) ? this->conf["icon"].asCString()[0] : '*';
 	this->mapa_bits = mapa_bits;
-	this->icon = icon;
 }
 
 Comida::~Comida()

@@ -1,5 +1,8 @@
 #include <unistd.h>
 
+#include <ncurses.h>
+#include <jsoncpp/json/json.h>
+
 #include "global.hpp"
 #include "mapa.hpp"
 
@@ -29,6 +32,9 @@ private:
 	int largo = LARGO_INI_SERPIENTE;
 	int x[LARGO_MAX_SERPIENTE + 1] = {37};
 	int y[LARGO_MAX_SERPIENTE + 1] = {18};
+	
+	Global global;
+	Json::Value conf;
 
 public:
 	int velocidad = VEL_INI;

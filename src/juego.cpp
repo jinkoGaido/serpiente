@@ -34,7 +34,7 @@ void Juego::iniciar(void)
 		this->serpiente->mover();
 
 		//velocidad de desplazamiento del gusano
-		this->global.retardo(UNIDAD_CUADROS / this->serpiente->velocidad);
+		this->retardo(UNIDAD_CUADROS / this->serpiente->velocidad);
 
 		//verificar si el gusano esta en la misma posicion x y del alimento
 		if (this->serpiente->si_come(this->comida->x, this->comida->y, this->puntos))
@@ -45,8 +45,8 @@ void Juego::iniciar(void)
 
 		if (this->serpiente->si_choca_con_el())
 		{
-			global.mensaje("CHOCASTE CON TU CUERPO.", 2);
-			global.mensaje("PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			global.mensaje(MAP_ALTO + 1, 35, "CHOCASTE CON TU CUERPO.", 2);
+			global.mensaje(MAP_ALTO + 1, 35, "PRESIONA UNA TECLA PARA CONTINUAR.", true);
 			this->vidas--;
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->mapa->dibujarMapa();
@@ -54,8 +54,8 @@ void Juego::iniciar(void)
 
 		if (this->serpiente->si_choca(this->mapa->eje))
 		{
-			global.mensaje("CHOCASTE CON EL MURO.", 2);
-			global.mensaje("PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			global.mensaje(MAP_ALTO + 1, 35, "CHOCASTE CON EL MURO.", 2);
+			global.mensaje(MAP_ALTO + 1, 35, "PRESIONA UNA TECLA PARA CONTINUAR.", true);
 			this->vidas--;
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->mapa->dibujarMapa();
@@ -68,8 +68,8 @@ void Juego::iniciar(void)
 
 		if ((this->puntos % PUNTOS_PROXIMO_NIVEL) == 0 && this->puntos != 0)
 		{
-			global.mensaje("NIVEL COMPLETADO.", 4);
-			global.mensaje("PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			global.mensaje(MAP_ALTO + 1, 35, "NIVEL COMPLETADO.", 4);
+			global.mensaje(MAP_ALTO + 1, 35, "PRESIONA UNA TECLA PARA CONTINUAR.", true);
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->puntos = 0;
 			si_nivel_avanzado = this->nivel->avanzarNivel();
@@ -93,10 +93,15 @@ void Juego::final()
 
 void Juego::terminarJuego()
 {
-	global.mensaje("JUEGO TERMINADO.", 4);
+	global.mensaje(MAP_ALTO + 1, 35, "JUEGO TERMINADO.", 4);
 	erase();
 	attroff(COLOR_PAIR(1));
 	endwin();
+}
+
+void Juego::retardo(int n)
+{
+	usleep(n * 1000);
 }
 
 void Juego::actualizarTablero()

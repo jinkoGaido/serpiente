@@ -8,6 +8,7 @@
 #include "comida.hpp"
 #include "juego.hpp"
 #include "nivel.hpp"
+#include "global.hpp"
 
 using namespace std;
 

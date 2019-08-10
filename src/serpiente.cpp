@@ -1,10 +1,9 @@
-#include <ncurses.h>
-
 #include "serpiente.hpp"
 
 Serpiente::Serpiente(char icon)
 {
-    this->icon = icon;
+    this->conf = this->global.configuracion("serpiente");
+    this->icon = (this->conf["icon"].isString()) ? this->conf["icon"].asCString()[0] : '*';
 }
 
 Serpiente::~Serpiente()

@@ -1,13 +1,5 @@
-#include <unistd.h>
-
-#include <ncurses.h>
-
-#include "kbhit.c"
-
 #include "global.hpp"
-#include "mapa.hpp"
-
-char Global::MENSAJE_BLANCO[40] = "                                      ";
+#include "kbhit.c"
 
 Global::Global()
 {
@@ -70,11 +62,6 @@ bool Global::capturarComando()
 	return continuar_juego;
 }
 
-void Global::retardo(int n)
-{
-	usleep(n * 1000);
-}
-
 void Global::pausa()
 {
 	int ctrPausa;
@@ -88,29 +75,43 @@ void Global::pausa()
 	mvprintw(10, 36, "       ");
 }
 
-void Global::mensaje(const char *msg, bool opt)
+void Global::mensaje(int y, int x, const char *msg, bool opt)
 {
 	attron(A_BOLD);
-	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
-	mvprintw(MAP_ALTO + 1, 35, msg);
+	mvprintw(y, x, MENSAJE_BLANCO);
+	mvprintw(y, x, msg);
 	refresh();
 
 	if (opt)
 		getch();
 
-	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
+	mvprintw(y, x, MENSAJE_BLANCO);
 	refresh();
 	attroff(A_BOLD);
 }
 
-void Global::mensaje(const char *msg, int seg)
+void Global::mensaje(int y, int x, const char *msg, int seg)
 {
 	attron(A_BOLD);
-	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
-	mvprintw(MAP_ALTO + 1, 35, msg);
+	mvprintw(y, x, MENSAJE_BLANCO);
+	mvprintw(y, x, msg);
 	refresh();
 	sleep(seg);
-	mvprintw(MAP_ALTO + 1, 35, Global::MENSAJE_BLANCO);
+	mvprintw(y, x, MENSAJE_BLANCO);
 	refresh();
 	attroff(A_BOLD);
+}
+
+Json::Value Global::configuracion(string nombre)
+{
+	ifstream ifs("configuracion.json");
+	Json::Reader reader;
+	Json::Value configuracion;
+	Json::Value conf;
+
+	reader.parse(ifs, configuracion);
+
+	conf = (nombre != "") ? configuracion[nombre] : configuracion;
+
+	return conf;
 }

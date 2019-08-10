@@ -1,6 +1,7 @@
-#include <ncurses.h>
-
 #include <unistd.h>
+
+#include <ncurses.h>
+#include <jsoncpp/json/json.h>
 
 #include "global.hpp"
 #include "nivel.hpp"
@@ -20,7 +21,9 @@ private:
 	Mapa *mapa;
 	Comida *comida;
 	Serpiente *serpiente;
+	
 	Global global;
+	Json::Value conf;
 
 	int puntos;
 	int vidas;
@@ -28,8 +31,8 @@ private:
 	bool continua;
 
 	int control();
-	void retardo(int);
 	void actualizarTablero();
+	void retardo(int);
 
 public:
 	Juego(Nivel *, Comida *, Serpiente *);
@@ -38,6 +41,5 @@ public:
 	void iniciar();
 	void final();
 	void terminarJuego();
-	void pausa();
 };
 #endif

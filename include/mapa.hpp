@@ -1,5 +1,10 @@
 #include <iostream>
 
+#include <ncurses.h>
+#include <jsoncpp/json/json.h>
+
+#include "global.hpp"
+
 #ifndef _MAPA_LIB
 #define _MAPA_LIB
 
@@ -25,15 +30,11 @@ const int SALIDA_PORTAL_DERECHA = MAP_ANCHO + MAP_INI_X - ZONA_PORTAL_SALIDA;
 const int ENTRADA_PORTAL_DERECHA = MAP_ANCHO + MAP_INI_X + ZONA_PORTAL_ENTRADA;
 const int SALIDA_PORTAL_IZQUIERDA = MAP_INI_X + ZONA_PORTAL_SALIDA;
 
-const char ICON_MAP = '#';
-
 struct map_coordenadas
 {
 	int x[MAP_ALTO][MAP_ANCHO];
 	int y[MAP_ALTO][MAP_ANCHO];
 };
-
-const string dir_mapa_base = "data/";
 
 class Mapa
 {
@@ -41,6 +42,9 @@ private:
 	char icon;
 	int buffer_map[MAP_ALTO][MAP_ANCHO];
 	string nombre;
+
+	Global global;
+	Json::Value conf;
 
 public:
 	Mapa(string);

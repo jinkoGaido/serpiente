@@ -1,0 +1,15 @@
+{
+    "serpiente": {
+        "icon": "*"
+    },
+    "mapa": {
+        "icon": "#"
+    },
+    "juego": {},
+    "comida": {
+        "icon": "*"
+    },
+    "nivel": {
+        "ruta_base": "data/"
+    }
+}

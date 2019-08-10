@@ -1,12 +1,11 @@
-#include <iostream>
-
-#include <ncurses.h>
-
 #include "mapa.hpp"
 
 Mapa::Mapa(string ruta)
 {
-	this->icon = ICON_MAP;
+	this->conf = this->global.configuracion("mapa");
+
+    this->icon = (this->conf["icon"].isString()) ? this->conf["icon"].asCString()[0] : '#';
+
 	this->cargarMapa(ruta);
 }
 
@@ -50,8 +49,6 @@ void Mapa::cargarMapa(string ruta)
 	int ch;
 	int cont_x = 0;
 	int cont_y = 0;
-
-	ruta = dir_mapa_base + ruta;
 
 	archivo_map = fopen(ruta.c_str(), "r");
 
