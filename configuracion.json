@@ -1,11 +1,21 @@
 {
     "serpiente": {
-        "icon": "*"
+        "icon": "*",
+        "vel_inicial": 5,
+        "vel_maxima": 20,
+        "largo_inicial": 2,
+        "largo_maximo": 99,
+        "aceleracion": 1,
+        "si_aumenta": 2
     },
     "mapa": {
-        "icon": "#"
+        "icon_muro": "#",
+        "icon_borde": "."
     },
-    "juego": {},
+    "juego": {
+        "vidas": 3,
+        "puntos_proximo_nivel": 2
+    },
     "comida": {
         "icon": "*"
     },

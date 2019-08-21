@@ -9,7 +9,10 @@ Juego::Juego(Nivel *nivel, Comida *comida, Serpiente *serpiente)
 	this->continua = true;
 
 	this->puntos = 0;
-	this->vidas = 3;
+
+	this->conf = this->global.configuracion("juego");
+	this->vidas = (this->conf["vidas"].isInt()) ? this->conf["vidas"].asInt() : 3;
+	this->puntos_proximo_nivel = (this->conf["puntos_proximo_nivel"].isInt()) ? this->conf["puntos_proximo_nivel"].asInt() : 2;
 }
 
 Juego::~Juego()
@@ -19,10 +22,13 @@ Juego::~Juego()
 void Juego::iniciar(void)
 {
 	bool si_nivel_avanzado;
+	bool serpiente_entro_tunel;
+
+	this->actualizarTablero();
 
 	while (this->continua)
 	{
-		this->comida->mostrar();
+		this->comida->dibujar();
 
 		this->continua = this->global.capturarComando();
 
@@ -34,13 +40,14 @@ void Juego::iniciar(void)
 		this->serpiente->mover();
 
 		//velocidad de desplazamiento del gusano
-		this->retardo(UNIDAD_CUADROS / this->serpiente->velocidad);
+		this->retardo(UNIDAD_CUADROS / this->serpiente->obtenerVelocidad());
 
 		//verificar si el gusano esta en la misma posicion x y del alimento
 		if (this->serpiente->si_come(this->comida->x, this->comida->y, this->puntos))
 		{
 			this->comida->randomXY();
 			this->puntos++;
+			this->actualizarTablero();
 		}
 
 		if (this->serpiente->si_choca_con_el())
@@ -50,6 +57,8 @@ void Juego::iniciar(void)
 			this->vidas--;
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->mapa->dibujarMapa();
+			this->mapa->dibujarTunel();
+			this->actualizarTablero();
 		}
 
 		if (this->serpiente->si_choca(this->mapa->eje))
@@ -59,6 +68,8 @@ void Juego::iniciar(void)
 			this->vidas--;
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->mapa->dibujarMapa();
+			this->mapa->dibujarTunel();
+			this->actualizarTablero();
 		}
 
 		if (this->vidas == 0)
@@ -66,11 +77,25 @@ void Juego::iniciar(void)
 			this->final();
 		}
 
-		if ((this->puntos % PUNTOS_PROXIMO_NIVEL) == 0 && this->puntos != 0)
+		if ((this->puntos % this->puntos_proximo_nivel) == 0 && this->puntos != 0)
+		{
+			this->mapa->dibujarTunel();
+			this->comida->ocultar();
+			serpiente_entro_tunel = this->serpiente->entrar_tunel(this->global.comando_nuevo);
+		}
+
+		if(this->mapa->tunel_visto && this->serpiente->salir_tunel(this->global.comando_nuevo)){
+			this->mapa->borrarTunel();
+		}
+
+		if (serpiente_entro_tunel)
 		{
 			global.mensaje(MAP_ALTO + 1, 35, "NIVEL COMPLETADO.", 4);
 			global.mensaje(MAP_ALTO + 1, 35, "PRESIONA UNA TECLA PARA CONTINUAR.", true);
+			this->comida->randomXY();
+			this->comida->mostrar();
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
+			this->serpiente->reiniciarVelocidad();
 			this->puntos = 0;
 			si_nivel_avanzado = this->nivel->avanzarNivel();
 
@@ -78,9 +103,10 @@ void Juego::iniciar(void)
 			{
 				this->final();
 			}
-		}
 
-		this->actualizarTablero();
+			this->actualizarTablero();
+			serpiente_entro_tunel = false;
+		}
 
 		refresh();
 	}
@@ -111,6 +137,6 @@ void Juego::actualizarTablero()
 	mvprintw(MAP_INI_Y - 1, 35, "Puntos: %i", this->puntos);
 	mvprintw(MAP_INI_Y - 1, 65, "Vidas: %i", this->vidas);
 
-	mvprintw(MAP_ALTO + 1, 5, "Velocidad: %i cuadro/s", this->serpiente->velocidad);
+	mvprintw(MAP_INI_Y + MAP_ALTO, 5, "Velocidad: %i cuadro/s", this->serpiente->obtenerVelocidad());
 	attroff(A_BOLD);
 }

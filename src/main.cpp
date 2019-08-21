@@ -12,16 +12,13 @@
 
 using namespace std;
 
-const char icon_serpiente = '*';
-const char icon_comida = '*';
-
 int main(int argc, char *argv[])
 {
 	Nivel nivel;
 	Mapa *mapa_bits = nivel.obtenerMapaActual();
 
-	Comida comida(mapa_bits, icon_comida);
-	Serpiente serpiente(icon_serpiente);
+	Comida comida(mapa_bits);
+	Serpiente serpiente(mapa_bits);
 	Juego juego(&nivel, &comida, &serpiente);
 
 	nivel.enlazar(&serpiente, &comida);
@@ -46,6 +43,7 @@ int main(int argc, char *argv[])
 	//attron(A_BOLD);
 
 	mapa_bits->dibujarMapa();
+	mapa_bits->dibujarBorde();
 	comida.randomXY();
 
 	juego.iniciar();

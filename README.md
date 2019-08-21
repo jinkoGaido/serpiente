@@ -8,10 +8,11 @@ El desarrollo de este proyecto es con fines educativos, por tanto su licencia es
  - Sistema operativo basado en linux.
 	 - Ejecutado y desarrollado en Ubuntu.
  - Librería ncurses: [sitio oficial](https://www.gnu.org/software/ncurses/)
+ - Librería jsoncpp: [sitio oficial](http://open-source-parsers.github.io/jsoncpp-docs/doxygen/index.html)
  
 # Instalación
  1. Descarga el repositorio.
- 2. Asegurate de tener instalado el compilador g++ y la librería ncurses.
+ 2. Asegurate de tener instalado el compilador g++ y las librerías ncurses y jsoncpp.
  3.  Descomprime y accede al directorio por la terminal.
  4. Ejecuta el comando: make.
  5. Para iniciar el juego solo ejecuta: ./serpiente

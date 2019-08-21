@@ -15,6 +15,7 @@ class Comida
 private:
     Mapa *mapa_bits;
     char icon;
+    bool visible;
     
     Global global;
 	Json::Value conf;
@@ -23,11 +24,14 @@ public:
     int x;
     int y;
     int verificar;
-    Comida(Mapa *, char);
+    Comida(Mapa *);
     ~Comida();
 
     void randomXY();
+    void dibujar();
+    void borrar();
     void mostrar();
+    void ocultar();
 };
 
 #endif

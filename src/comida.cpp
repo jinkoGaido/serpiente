@@ -1,10 +1,11 @@
 #include "comida.hpp"
 
-Comida::Comida(Mapa *mapa_bits, char icon)
+Comida::Comida(Mapa *mapa_bits)
 {
 	this->conf = this->global.configuracion("comida");
-    this->icon = (this->conf["icon"].isString()) ? this->conf["icon"].asCString()[0] : '*';
+	this->icon = (this->conf["icon"].isString()) ? this->conf["icon"].asCString()[0] : '*';
 	this->mapa_bits = mapa_bits;
+	this->mostrar();
 }
 
 Comida::~Comida()
@@ -36,9 +37,30 @@ void Comida::randomXY()
 	} while (verificar);
 }
 
+void Comida::dibujar()
+{
+	if (this->visible)
+	{
+		attron(A_BOLD);
+		mvaddch(this->y, this->x, this->icon);
+		attroff(A_BOLD);
+	}
+}
+
+void Comida::borrar()
+{
+	this->x = 0;
+	this->y = 0;
+	mvaddch(this->y, this->x, ' ');
+}
+
 void Comida::mostrar()
 {
-	attron(A_BOLD);
-	mvaddch(this->y, this->x, this->icon);
-	attroff(A_BOLD);
+	this->visible = true;
+}
+
+void Comida::ocultar()
+{
+	this->visible = false;
+	this->borrar();
 }

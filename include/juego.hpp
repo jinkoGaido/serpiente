@@ -12,8 +12,6 @@
 #ifndef _JUEGO_LIB
 #define _JUEGO_LIB
 
-const int PUNTOS_PROXIMO_NIVEL = 3;
-
 class Juego
 {
 private:
@@ -27,6 +25,7 @@ private:
 
 	int puntos;
 	int vidas;
+	int puntos_proximo_nivel;
 
 	bool continua;
 

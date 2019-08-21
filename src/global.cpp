@@ -3,7 +3,7 @@
 
 Global::Global()
 {
-	this->comando_nuevo = COMANDO_DERECHA;
+	this->comando_nuevo = COMANDO_ARRIBA;
 }
 
 Global::~Global()

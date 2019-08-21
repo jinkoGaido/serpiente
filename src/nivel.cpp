@@ -62,6 +62,7 @@ bool Nivel::avanzarNivel()
         {
             this->mapa->cargarMapa(this->dir_mapa_base + this->directorios_mapa.at(this->numero_nivel_juego));
             this->mapa->dibujarMapa();
+            this->mapa->dibujarBorde();
         }
         catch (const std::exception &e)
         {
