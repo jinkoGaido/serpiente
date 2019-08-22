@@ -47,10 +47,6 @@ struct map_coordenadas
 class Mapa
 {
 private:
-	int x_tunel[TUNEL_ALTO][TUNEL_ANCHO];
-	int y_tunel[TUNEL_ALTO][TUNEL_ANCHO];
-	char icon_tunel[TUNEL_ALTO][TUNEL_ANCHO];
-
 	int buffer_map[MAP_ALTO][MAP_ANCHO];
 
 	char icon_muro;
@@ -64,6 +60,9 @@ public:
 	Mapa(string);
 	~Mapa();
 
+	char icon_tunel[TUNEL_ALTO][TUNEL_ANCHO];
+	int x_tunel[TUNEL_ALTO][TUNEL_ANCHO];
+	int y_tunel[TUNEL_ALTO][TUNEL_ANCHO];
 	vector<int> x_tunel_portal;
 	int y_tunel_portal;
 	bool tunel_visto;

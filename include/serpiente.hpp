@@ -39,14 +39,18 @@ public:
 
 	void mover();
 	void mover(int, int, int &);
-	int si_come(int, int, int);
-	int si_choca(map_coordenadas);
-	int si_choca_con_el();
+	bool si_come(int, int, int);
+	bool si_choca_con_muro(map_coordenadas);
+	bool si_choca_con_tunel();
+	bool si_choca_con_el();
 	void limite_map(int);
 	bool entrar_tunel(int);
 	bool salir_tunel(int);
 	void cambiar_direccion(int &, int &);
 	int obtenerVelocidad();
 	void reiniciarVelocidad();
+	int obtener_pos_x();
+	int obtener_pos_y();
+	void dibujar();
 };
 #endif

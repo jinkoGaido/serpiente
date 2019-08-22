@@ -25,6 +25,7 @@ void Juego::iniciar(void)
 	bool serpiente_entro_tunel;
 
 	this->actualizarTablero();
+	this->mapa->dibujarTunel();
 
 	while (this->continua)
 	{
@@ -47,7 +48,6 @@ void Juego::iniciar(void)
 		{
 			this->comida->randomXY();
 			this->puntos++;
-			this->actualizarTablero();
 		}
 
 		if (this->serpiente->si_choca_con_el())
@@ -58,10 +58,9 @@ void Juego::iniciar(void)
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->mapa->dibujarMapa();
 			this->mapa->dibujarTunel();
-			this->actualizarTablero();
 		}
 
-		if (this->serpiente->si_choca(this->mapa->eje))
+		if (this->serpiente->si_choca_con_muro(this->mapa->eje))
 		{
 			global.mensaje(MAP_ALTO + 1, 35, "CHOCASTE CON EL MURO.", 2);
 			global.mensaje(MAP_ALTO + 1, 35, "PRESIONA UNA TECLA PARA CONTINUAR.", true);
@@ -69,7 +68,6 @@ void Juego::iniciar(void)
 			this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			this->mapa->dibujarMapa();
 			this->mapa->dibujarTunel();
-			this->actualizarTablero();
 		}
 
 		if (this->vidas == 0)
@@ -81,10 +79,20 @@ void Juego::iniciar(void)
 		{
 			this->mapa->dibujarTunel();
 			this->comida->ocultar();
+
+			if (this->serpiente->si_choca_con_tunel())
+			{
+				global.mensaje(MAP_ALTO + 1, 35, "CHOCASTE CON EL TUNEL.", 2);
+				global.mensaje(MAP_ALTO + 1, 35, "PRESIONA UNA TECLA PARA CONTINUAR.", true);
+				this->vidas--;
+				this->serpiente->mover(37, 18, this->global.comando_nuevo);
+			}
+
 			serpiente_entro_tunel = this->serpiente->entrar_tunel(this->global.comando_nuevo);
 		}
 
-		if(this->mapa->tunel_visto && this->serpiente->salir_tunel(this->global.comando_nuevo)){
+		if (this->mapa->tunel_visto && this->serpiente->salir_tunel(this->global.comando_nuevo))
+		{
 			this->mapa->borrarTunel();
 		}
 
@@ -103,12 +111,12 @@ void Juego::iniciar(void)
 			{
 				this->final();
 			}
-
-			this->actualizarTablero();
 			serpiente_entro_tunel = false;
 		}
 
-		refresh();
+		this->serpiente->dibujar();
+
+		this->actualizarTablero();
 	}
 }
 
@@ -133,10 +141,11 @@ void Juego::retardo(int n)
 void Juego::actualizarTablero()
 {
 	attron(A_BOLD);
-	mvprintw(MAP_INI_Y - 1, 5, "Mapa: %s", this->mapa->obtenerNombre().c_str());
-	mvprintw(MAP_INI_Y - 1, 35, "Puntos: %i", this->puntos);
-	mvprintw(MAP_INI_Y - 1, 65, "Vidas: %i", this->vidas);
+	mvprintw(MAP_INI_Y - 1, 2, "Mapa: %s", this->mapa->obtenerNombre().c_str());
+	mvprintw(MAP_INI_Y - 1, 36, "Puntos: %i", this->puntos);
+	mvprintw(MAP_INI_Y - 1, 70, "Vidas: %i", this->vidas);
 
 	mvprintw(MAP_INI_Y + MAP_ALTO, 5, "Velocidad: %i cuadro/s", this->serpiente->obtenerVelocidad());
 	attroff(A_BOLD);
+	refresh();
 }

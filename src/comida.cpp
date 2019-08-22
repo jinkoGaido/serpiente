@@ -18,8 +18,8 @@ void Comida::randomXY()
 	{
 		this->verificar = 0;
 
-		this->x = ((random() + time(NULL)) % (MAP_ANCHO - 2)) + 1;
-		this->y = ((random() + time(NULL)) % (MAP_ALTO - 2)) + 2;
+		this->x = ((random() + time(NULL)) % (MAP_ANCHO - 2)) + MAP_INI_X;
+		this->y = ((random() + time(NULL)) % (MAP_ALTO - 2)) + MAP_INI_Y;
 
 		for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
 		{

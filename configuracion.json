@@ -3,7 +3,7 @@
         "icon": "*",
         "vel_inicial": 5,
         "vel_maxima": 20,
-        "largo_inicial": 2,
+        "largo_inicial": 3,
         "largo_maximo": 99,
         "aceleracion": 1,
         "si_aumenta": 2
@@ -13,7 +13,7 @@
         "icon_borde": "."
     },
     "juego": {
-        "vidas": 3,
+        "vidas": 5,
         "puntos_proximo_nivel": 2
     },
     "comida": {

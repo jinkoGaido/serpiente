@@ -52,13 +52,13 @@ void Serpiente::mover(int x_serpiente, int y_serpiente, int &comando_nuevo)
     for (int i = 0; i < this->largo; i++)
     {
         this->y.at(i) = y_serpiente;
-        this->x.at(i) = x_serpiente--;
+        this->x.at(i) = x_serpiente;
     }
 
     comando_nuevo = COMANDO_ARRIBA;
 }
 
-int Serpiente::si_come(int x_comida, int y_comida, int puntos)
+bool Serpiente::si_come(int x_comida, int y_comida, int puntos)
 {
     int comio = false;
 
@@ -77,13 +77,13 @@ int Serpiente::si_come(int x_comida, int y_comida, int puntos)
     return comio;
 }
 
-int Serpiente::si_choca(map_coordenadas map_eje)
+bool Serpiente::si_choca_con_muro(map_coordenadas map_eje)
 {
     int choco = false;
 
-    for (int cont2 = false; cont2 < MAP_ALTO; cont2++)
+    for (int cont2 = 0; cont2 < MAP_ALTO; cont2++)
     {
-        for (int cont = false; cont < MAP_ANCHO; cont++)
+        for (int cont = 0; cont < MAP_ANCHO; cont++)
             if (this->x.at(0) == map_eje.x[cont2][cont] && this->y.at(0) == map_eje.y[cont2][cont])
             {
                 choco = true;
@@ -94,7 +94,24 @@ int Serpiente::si_choca(map_coordenadas map_eje)
     return choco;
 }
 
-int Serpiente::si_choca_con_el()
+bool Serpiente::si_choca_con_tunel()
+{
+    int choco = false;
+
+    for (int alto = 0; alto < TUNEL_ALTO; alto++)
+    {
+        for (int ancho = 0; ancho < TUNEL_ANCHO; ancho++)
+            if ((this->x.at(0) == this->mapa_bits->x_tunel[alto][ancho] && this->y.at(0) == this->mapa_bits->y_tunel[alto][ancho]) && this->mapa_bits->icon_tunel[alto][ancho] == '|')
+            {
+                choco = true;
+                break;
+            }
+    }
+
+    return choco;
+}
+
+bool Serpiente::si_choca_con_el()
 {
     int choco = false;
 
@@ -201,4 +218,22 @@ int Serpiente::obtenerVelocidad()
 void Serpiente::reiniciarVelocidad()
 {
     this->velocidad = this->vel_inicial;
+}
+
+int Serpiente::obtener_pos_x()
+{
+    return this->x.at(0);
+}
+
+int Serpiente::obtener_pos_y()
+{
+    return this->y.at(0);
+}
+
+void Serpiente::dibujar()
+{
+    for (int i = 0; i < this->largo; i++)
+    {
+        mvaddch(this->y.at(i), this->x.at(i), this->icon);
+    }
 }
