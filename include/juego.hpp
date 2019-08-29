@@ -1,7 +1,9 @@
 #include <unistd.h>
+#include <fstream>
 
 #include <ncurses.h>
 #include <jsoncpp/json/json.h>
+#include <panel.h>
 
 #include "global.hpp"
 #include "nivel.hpp"
@@ -12,6 +14,8 @@
 #ifndef _JUEGO_LIB
 #define _JUEGO_LIB
 
+using namespace std;
+
 class Juego
 {
 private:
@@ -19,7 +23,10 @@ private:
 	Mapa *mapa;
 	Comida *comida;
 	Serpiente *serpiente;
-	
+	ifstream *fichero;
+	string mensaje;
+	PANEL *local_panel;
+
 	Global global;
 	Json::Value conf;
 
@@ -40,5 +47,6 @@ public:
 	void iniciar();
 	void final();
 	void terminarJuego();
+	void mensajefinal();
 };
 #endif

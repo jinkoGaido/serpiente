@@ -4,7 +4,7 @@ INCLUDES = -I./include
 DEBUG = #-g
 SRC_DIR = ./src/
 OBJ_DIR = ./object/
-LIBS = -lncurses -ljsoncpp
+LIBS = -lpanel -lncurses -ljsoncpp
 
 default: main
 

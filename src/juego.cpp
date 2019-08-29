@@ -13,10 +13,29 @@ Juego::Juego(Nivel *nivel, Comida *comida, Serpiente *serpiente)
 	this->conf = this->global.configuracion("juego");
 	this->vidas = (this->conf["vidas"].isInt()) ? this->conf["vidas"].asInt() : 3;
 	this->puntos_proximo_nivel = (this->conf["puntos_proximo_nivel"].isInt()) ? this->conf["puntos_proximo_nivel"].asInt() : 2;
+
+	this->fichero = new ifstream("mensaje.txt");
+	char c;
+
+	if (fichero->good())
+	{
+		while (fichero->get(c))
+		{
+			this->mensaje += c;
+		}
+	}
+	else
+	{
+		this->mensaje = "No hay mensaje";
+	}
+
+	fichero->close();
 }
 
 Juego::~Juego()
 {
+	delwin(this->local_panel->win);
+	del_panel(this->local_panel);
 }
 
 void Juego::iniciar(void)
@@ -87,7 +106,6 @@ void Juego::iniciar(void)
 				this->vidas--;
 				this->serpiente->mover(37, 18, this->global.comando_nuevo);
 			}
-
 			serpiente_entro_tunel = this->serpiente->entrar_tunel(this->global.comando_nuevo);
 		}
 
@@ -127,7 +145,10 @@ void Juego::final()
 
 void Juego::terminarJuego()
 {
+	this->mensajefinal();
 	global.mensaje(MAP_ALTO + 1, 35, "JUEGO TERMINADO.", 4);
+	global.mensaje(MAP_ALTO + 1, 35, "PRESIONA Q PARA FINALIZAR.", true);
+	while (getch() != 'q');
 	erase();
 	attroff(COLOR_PAIR(1));
 	endwin();
@@ -148,4 +169,16 @@ void Juego::actualizarTablero()
 	mvprintw(MAP_INI_Y + MAP_ALTO, 5, "Velocidad: %i cuadro/s", this->serpiente->obtenerVelocidad());
 	attroff(A_BOLD);
 	refresh();
+}
+
+void Juego::mensajefinal()
+{
+	WINDOW *local_win;
+
+	local_win = newwin(22, 79, 0, 0);
+	box(local_win, 0, 0);
+	mvwprintw(local_win, 8, 20, this->mensaje.c_str());
+	this->local_panel = new_panel(local_win);
+	update_panels();
+	doupdate();
 }
